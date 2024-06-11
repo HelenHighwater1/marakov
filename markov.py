@@ -7,13 +7,14 @@ def open_and_read_file(file_path):
     """Take file path as string; return text as string.
 
     Takes a string that is a file path, opens the file, and turns
-    the file's contents as one string of text.
+    the file's contents as one string of text. as an array
     """
 
-    # your code goes here
+    contents = open(file_path).read()
 
-    return 'Contents of your file as one long string'
-
+    return contents
+ 
+text = open_and_read_file('green-eggs.txt')
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -42,10 +43,26 @@ def make_chains(text_string):
 
     chains = {}
 
-    # your code goes here
+    word_array = text_string.split() 
 
-    return chains
+    for i in range(len(word_array) - 2): 
+        #Would you like them, Sam I am?
+        #  0   1    2
+        #      1    2    3
+        #           2    3    4
+     # ('Would', 'you'): ['like'],
+        key_tuple = word_array[i], word_array[i + 1]
+        next_word = word_array[i+2]
+        
+        if key_tuple in chains:
+            chains[key_tuple].append(next_word)
+        else:
+            chains[key_tuple] = [next_word] 
 
+    for key_tuple, arr in chains.items():
+        print(tuple, ":", arr)
+
+make_chains(text)
 
 def make_text(chains):
     """Return text from chains."""
